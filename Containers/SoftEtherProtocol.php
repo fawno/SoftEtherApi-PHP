@@ -14,7 +14,19 @@ namespace SoftEtherApi\Containers
 
         public static function SerializeLong($val)
         {
-            return pack('J', $val);
+            if(PHP_INT_SIZE > 4) {
+                return pack('J', $val);
+            }
+
+            //For 32Bit php
+
+            $lowerVal = (int)$val;
+            $toRemoveFromUpper = $lowerVal >= 0 ? $lowerVal : ($lowerVal & 0x7FFFFFFF) + 0x80000000;
+            $upperVal = ($val - $toRemoveFromUpper) / 0x100000000;
+
+            $upperRetVal = pack('N', $upperVal);
+            $LowerRetVal = pack('N', $lowerVal);
+            return $upperRetVal.$LowerRetVal;
         }
 
         private static function SerializeBytes(&$val)
@@ -99,11 +111,26 @@ namespace SoftEtherApi\Containers
             return (int)$retValArr[1];
         }
 
-        private static function readLong(&$val, &$index)
+        public static function readLong(&$val, &$index)
         {
-            $retValArr = unpack('J', $val, $index);
+            //For 64Bit php
+            if(PHP_INT_SIZE > 4) {
+                $retValArr = unpack('J', $val, $index);
+                $index += 8;
+                return $retValArr[1];
+            }
+
+            //For 32Bit php
+            $upperVal = unpack('N', $val, $index)[1];
+            $lowerVal = unpack('N', $val, $index + 4)[1];
+
+            $upperVal = $upperVal >= 0 ? $upperVal : (float)($upperVal & 0x7FFFFFFF) + 0x80000000;
+            $lowerVal = $lowerVal >= 0 ? $lowerVal : (float)($lowerVal & 0x7FFFFFFF) + 0x80000000;
+
+            $retVal = ($upperVal * 0x100000000) + $lowerVal;
+
             $index += 8;
-            return (int)$retValArr[1];
+            return $retVal;
         }
 
         private static function readString(&$val, &$index, $size)
