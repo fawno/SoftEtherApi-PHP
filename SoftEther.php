@@ -98,7 +98,7 @@ namespace SoftEtherApi
                     'client_build' => ['type' => SoftEtherValueType::Int, 'value' => [0]]
                 ];
 
-            if ($hubName == null || $hubName == '')
+            if ($hubName !== null && $hubName !== '')
                 $authPayload['hubname'] = ['type' => SoftEtherValueType::String, 'value' => [$hubName]];
 
             $securePassword = self::CreateSaltedHash($passwordHash, $this->RandomFromServer);
