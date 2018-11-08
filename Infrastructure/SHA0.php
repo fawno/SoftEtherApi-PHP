@@ -280,7 +280,7 @@ namespace SoftEtherApi\Infrastructure
 
         private static function ROR($x, $y)
         {
-            return self::To32BitInteger(($x >> $y) ^ ($x << (4 * 8 - $y))); //4 = sizeof(uint)
+            return self::To32BitInteger(self::RightLogicalShift($x, $y) ^ ($x << (4 * 8 - $y))); //4 = sizeof(uint)
         }
 
         private static function PACK_32_BE(&$buf, $startIndex, &$x)
@@ -293,21 +293,21 @@ namespace SoftEtherApi\Infrastructure
 
         private static function UNPACK_32_BE($x, &$buf, $startIndex)
         {
-            $buf[$startIndex] = self::ToByte($x >> 24);
-            $buf[$startIndex + 1] = self::ToByte($x >> 16);
-            $buf[$startIndex + 2] = self::ToByte($x >> 8);
+            $buf[$startIndex] = self::ToByte(self::RightLogicalShift($x, 24));
+            $buf[$startIndex + 1] = self::ToByte(self::RightLogicalShift($x, 16));
+            $buf[$startIndex + 2] = self::ToByte(self::RightLogicalShift($x, 8));
             $buf[$startIndex + 3] = self::ToByte($x);
         }
 
         private static function UNPACK_64_BE($x, &$buf, $startIndex)
         {
-            $buf[$startIndex] = self::ToByte($x >> 56);
-            $buf[$startIndex + 1] = self::ToByte($x >> 48);
-            $buf[$startIndex + 2] = self::ToByte($x >> 40);
-            $buf[$startIndex + 3] = self::ToByte($x >> 32);
-            $buf[$startIndex + 4] = self::ToByte($x >> 24);
-            $buf[$startIndex + 5] = self::ToByte($x >> 16);
-            $buf[$startIndex + 6] = self::ToByte($x >> 8);
+            $buf[$startIndex] = self::ToByte(self::RightLogicalShift($x, 56));
+            $buf[$startIndex + 1] = self::ToByte(self::RightLogicalShift($x, 48));
+            $buf[$startIndex + 2] = self::ToByte(self::RightLogicalShift($x, 40));
+            $buf[$startIndex + 3] = self::ToByte(self::RightLogicalShift($x, 32));
+            $buf[$startIndex + 4] = self::ToByte(self::RightLogicalShift($x, 24));
+            $buf[$startIndex + 5] = self::ToByte(self::RightLogicalShift($x, 16));
+            $buf[$startIndex + 6] = self::ToByte(self::RightLogicalShift($x, 8));
             $buf[$startIndex + 7] = self::ToByte($x);
         }
 
@@ -319,6 +319,20 @@ namespace SoftEtherApi\Infrastructure
         private static function ToByte($val)
         {
             return $val & 0xFF;
+        }
+
+        private static function RightLogicalShift($val, $toShift)
+        {
+            if($toShift <= 0)
+                return $val;
+
+            if((int)$val >= 0)
+                return $val >> $toShift;
+
+            $validMask = ~((int)0x80000000 >> ($toShift - 1));
+            $ret = (($val >> $toShift) & $validMask);
+
+            return $ret;
         }
     }
 }
