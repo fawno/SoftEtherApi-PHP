@@ -1,9 +1,13 @@
 <?php
 
 namespace SoftEtherApi\Api {
-    require('SoftEtherModel/HubStatus.php');
+    require_once('SoftEtherModel/HubStatus.php');
+    require_once('SoftEtherModel/HubUser.php');
+    require_once('Model/AuthType.php');
+    require_once('Infrastructure/SoftEtherConverter.php');
 
     use SoftEtherApi\Containers\SoftEtherValueType;
+    use SoftEtherApi\Infrastructure\SoftEtherConverter;
     use SoftEtherApi\Model\AuthType;
     use SoftEtherApi\Model\HubType;
     use SoftEtherApi\SoftEtherModel\Hub;
@@ -415,10 +419,10 @@ namespace SoftEtherApi\Api {
                     'GroupName' => ['type' => SoftEtherValueType::String, 'value' => [$groupName]],
                     'Realname' => ['type' => SoftEtherValueType::String, 'value' => [$realName]],
                     'Note' => ['type' => SoftEtherValueType::String, 'value' => [$note]],
-                    'ExpireTime' => ['type' => SoftEtherValueType::String, 'value' => [$expireTime]],
-                    'AuthType' => ['type' => SoftEtherValueType::String, 'value' => [AuthType::Password]],
-                    'HashedKey' => ['type' => SoftEtherValueType::String, 'value' => [$hashPair->Hash]],
-                    'NtLmSecureHash' => ['type' => SoftEtherValueType::String, 'value' => [$hashPair->SaltedHash]],
+                    'ExpireTime' => ['type' => SoftEtherValueType::Int64, 'value' => [SoftEtherConverter::DateTimeToSoftEtherLong($expireTime)]],
+                    'AuthType' => ['type' => SoftEtherValueType::Int, 'value' => [AuthType::Password]],
+                    'HashedKey' => ['type' => SoftEtherValueType::Raw, 'value' => [$hashPair->Hash]],
+                    'NtLmSecureHash' => ['type' => SoftEtherValueType::Raw, 'value' => [$hashPair->SaltedHash]],
                 ];
 
             $rawData = $this->softEther->CallMethod('CreateUser', $requestData);

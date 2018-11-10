@@ -2,15 +2,15 @@
 
 namespace SoftEtherApi\Api
 {
-    require_once('Containers\SoftEtherValueType.php');
-    require_once('SoftEtherModel\ConnectionInfo.php');
-    require_once('SoftEtherModel\ConnectionList.php');
-    require_once('SoftEtherModel\L2tpSettings.php');
-    require_once('SoftEtherModel\PortListenerList.php');
-    require_once('SoftEtherModel\ServerCert.php');
-    require_once('SoftEtherModel\ServerCipher.php');
-    require_once('SoftEtherModel\ServerInfo.php');
-    require_once('SoftEtherModel\ServerStatus.php');
+    require_once('Containers/SoftEtherValueType.php');
+    require_once('SoftEtherModel/ConnectionInfo.php');
+    require_once('SoftEtherModel/ConnectionList.php');
+    require_once('SoftEtherModel/L2tpSettings.php');
+    require_once('SoftEtherModel/PortListenerList.php');
+    require_once('SoftEtherModel/ServerCert.php');
+    require_once('SoftEtherModel/ServerCipher.php');
+    require_once('SoftEtherModel/ServerInfo.php');
+    require_once('SoftEtherModel/ServerStatus.php');
 
     use SoftEtherApi\Containers\SoftEtherValueType;
     use SoftEtherApi\SoftEtherModel\ConnectionInfo;

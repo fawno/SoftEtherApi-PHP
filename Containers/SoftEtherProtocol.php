@@ -2,7 +2,7 @@
 
 namespace SoftEtherApi\Containers
 {
-    require('SoftEtherValueType.php');
+    require_once('SoftEtherValueType.php');
     use Exception;
 
     class SoftEtherProtocol

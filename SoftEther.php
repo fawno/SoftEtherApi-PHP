@@ -2,16 +2,16 @@
 
 namespace SoftEtherApi
 {
-    require('Infrastructure\SHA0.php');
-    require('Containers\SoftEtherHashPair.php');
-    require('Containers\SoftEtherNetwork.php');
-    require('Containers\SoftEtherProtocol.php');
+    require_once('Infrastructure/SHA0.php');
+    require_once('Containers/SoftEtherHashPair.php');
+    require_once('Containers/SoftEtherNetwork.php');
+    require_once('Containers/SoftEtherProtocol.php');
 
-    require('Api\SoftEtherServer.php');
-    require('Api\SoftEtherHub.php');
+    require_once('Api/SoftEtherServer.php');
+    require_once('Api/SoftEtherHub.php');
 
-    require('SoftEtherModel\ConnectResult.php');
-    require('SoftEtherModel\AuthResult.php');
+    require_once('SoftEtherModel/ConnectResult.php');
+    require_once('SoftEtherModel/AuthResult.php');
 
     use SoftEtherApi\Api\SoftEtherHub;
     use SoftEtherApi\Api\SoftEtherServer;
