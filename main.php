@@ -1,6 +1,6 @@
 <?php
 
-require('SoftEther.php');
+require('SoftEtherApi\SoftEther.php');
 use SoftEtherApi\SoftEther;
 
 $softEther = new SoftEther("hostname", 5555);
