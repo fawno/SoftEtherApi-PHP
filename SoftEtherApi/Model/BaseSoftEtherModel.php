@@ -26,12 +26,15 @@ namespace SoftEtherApi\Model
 
         public static function Deserialize($collection)
         {
-            return Infrastructure\ModelDeserializer::Deserialize(static::class, $collection);
+            $result = Infrastructure\ModelDeserializer::Deserialize(static::class, $collection);
+            if($result->NotValid())
+                return $result;
+            return $result[0];
         }
 
         public static function DeserializeMany($collection)
         {
-            return Infrastructure\ModelDeserializer::DeserializeMany(static::class, $collection);
+            return Infrastructure\ModelDeserializer::Deserialize(static::class, $collection);
         }
     }
 }

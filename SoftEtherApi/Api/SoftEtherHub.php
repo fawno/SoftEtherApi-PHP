@@ -20,7 +20,7 @@ namespace SoftEtherApi\Api {
         {
             $requestData = [
                 'HubName' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$hubName]],
-                'Online' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$online]],
+                'Online' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$online]],
             ];
 
             $rawData = $this->softEther->CallMethod('SetHubOnline', $requestData);
@@ -79,28 +79,28 @@ namespace SoftEtherApi\Api {
             return $this->SetSecureNatOptions($hubName, $options);
         }
 
-        public function SetSecureNatOptions($hubName, $options)
+        public function SetSecureNatOptions($options)
         {
             $requestData = [
                 'RpcHubName' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->RpcHubName]],
-                'MacAddress' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->MacAddress]],
-                'Ip' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->Ip]],
-                'Mask' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->Mask]],
-                'UseNat' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->UseNat]],
-                'Mtu' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->Mtu]],
-                'NatTcpTimeout' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->NatTcpTimeout]],
-                'NatUdpTimeout' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->NatUdpTimeout]],
-                'UseDhcp' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->UseDhcp]],
-                'DhcpLeaseIPStart' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->DhcpLeaseIPStart]],
-                'DhcpLeaseIPEnd' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->DhcpLeaseIPEnd]],
-                'DhcpSubnetMask' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->DhcpSubnetMask]],
-                'DhcpExpireTimeSpan' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->DhcpExpireTimeSpan]],
-                'DhcpGatewayAddress' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->DhcpGatewayAddress]],
-                'DhcpDnsServerAddress' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->DhcpDnsServerAddress]],
-                'DhcpDnsServerAddress2' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->DhcpDnsServerAddress2]],
+                'MacAddress' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->MacAddress]],
+                'Ip' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->Ip]],
+                'Mask' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->Mask]],
+                'UseNat' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->UseNat]],
+                'Mtu' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->Mtu]],
+                'NatTcpTimeout' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->NatTcpTimeout]],
+                'NatUdpTimeout' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->NatUdpTimeout]],
+                'UseDhcp' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->UseDhcp]],
+                'DhcpLeaseIPStart' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->DhcpLeaseIPStart]],
+                'DhcpLeaseIPEnd' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->DhcpLeaseIPEnd]],
+                'DhcpSubnetMask' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->DhcpSubnetMask]],
+                'DhcpExpireTimeSpan' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->DhcpExpireTimeSpan]],
+                'DhcpGatewayAddress' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->DhcpGatewayAddress]],
+                'DhcpDnsServerAddress' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->DhcpDnsServerAddress]],
+                'DhcpDnsServerAddress2' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->DhcpDnsServerAddress2]],
                 'DhcpDomainName' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->DhcpDomainName]],
-                'SaveLog' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->SaveLog]],
-                'ApplyDhcpPushRoutes' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->ApplyDhcpPushRoutes]],
+                'SaveLog' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->SaveLog]],
+                'ApplyDhcpPushRoutes' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$options->ApplyDhcpPushRoutes]],
                 'DhcpPushRoutes' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$options->DhcpPushRoutes->ToString()]]
             ];
 
@@ -165,35 +165,35 @@ namespace SoftEtherApi\Api {
         {
             $requestData = [
                 'HubName' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$hubName]],
-                'Id' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->Id]],
+                'Id' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->Id]],
                 'Note' => ['type' => Containers\SoftEtherValueType::UnicodeString, 'value' => [$accessList->Note]],
-                'Active' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->Active]],
-                'Priority' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->Priority]],
-                'Discard' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->Discard]],
-                'SrcIpAddress' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->SrcIpAddress]],
-                'SrcSubnetMask' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->SrcSubnetMask]],
-                'DestIpAddress' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->DestIpAddress]],
-                'DestSubnetMask' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->DestSubnetMask]],
-                'Protocol' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->Protocol]],
-                'SrcPortStart' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->SrcPortStart]],
-                'SrcPortEnd' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->SrcPortEnd]],
-                'DestPortStart' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->DestPortStart]],
-                'DestPortEnd' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->DestPortEnd]],
+                'Active' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->Active]],
+                'Priority' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->Priority]],
+                'Discard' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->Discard]],
+                'SrcIpAddress' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->SrcIpAddress]],
+                'SrcSubnetMask' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->SrcSubnetMask]],
+                'DestIpAddress' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->DestIpAddress]],
+                'DestSubnetMask' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->DestSubnetMask]],
+                'Protocol' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->Protocol]],
+                'SrcPortStart' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->SrcPortStart]],
+                'SrcPortEnd' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->SrcPortEnd]],
+                'DestPortStart' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->DestPortStart]],
+                'DestPortEnd' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->DestPortEnd]],
                 'SrcUsername' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->SrcUsername]],
                 'DestUsername' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->DestUsername]],
-                'CheckSrcMac' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->CheckSrcMac]],
-                'SrcMacAddress' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->SrcMacAddress]],
-                'SrcMacMask' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->SrcMacMask]],
-                'CheckDstMac' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->CheckDstMac]],
-                'DstMacAddress' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->DstMacAddress]],
-                'DstMacMask' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->DstMacMask]],
-                'CheckTcpState' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->CheckTcpState]],
-                'Established' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->Established]],
-                'Delay' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->Delay]],
-                'Jitter' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->Jitter]],
-                'Loss' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->Loss]],
-                'IsIPv6' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->IsIPv6]],
-                'UniqueId' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->UniqueId]],
+                'CheckSrcMac' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->CheckSrcMac]],
+                'SrcMacAddress' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->SrcMacAddress]],
+                'SrcMacMask' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->SrcMacMask]],
+                'CheckDstMac' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->CheckDstMac]],
+                'DstMacAddress' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->DstMacAddress]],
+                'DstMacMask' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->DstMacMask]],
+                'CheckTcpState' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->CheckTcpState]],
+                'Established' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->Established]],
+                'Delay' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->Delay]],
+                'Jitter' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->Jitter]],
+                'Loss' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->Loss]],
+                'IsIPv6' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->IsIPv6]],
+                'UniqueId' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$accessList->UniqueId]],
                 'RedirectUrl' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$accessList->RedirectUrl]],
             ];
 
@@ -212,35 +212,35 @@ namespace SoftEtherApi\Api {
         {
             $requestData = [
                 'HubName' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$hubName]],
-                'Id' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->Id;}, $accessList)],
+                'Id' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->Id;}, $accessList)],
                 'Note' => ['type' => Containers\SoftEtherValueType::UnicodeString, 'value' => array_map(function ($x) {return $x->Id;}, $accessList)],
-                'Active' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->Active;}, $accessList)],
-                'Priority' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->Priority;}, $accessList)],
-                'Discard' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->Discard;}, $accessList)],
-                'SrcIpAddress' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->SrcIpAddress;}, $accessList)],
-                'SrcSubnetMask' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->SrcSubnetMask;}, $accessList)],
-                'DestIpAddress' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->DestIpAddress;}, $accessList)],
-                'DestSubnetMask' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->DestSubnetMask;}, $accessList)],
-                'Protocol' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->Protocol;}, $accessList)],
-                'SrcPortStart' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->SrcPortStart;}, $accessList)],
-                'SrcPortEnd' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->SrcPortEnd;}, $accessList)],
-                'DestPortStart' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->DestPortStart;}, $accessList)],
-                'DestPortEnd' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->DestPortEnd;}, $accessList)],
+                'Active' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->Active;}, $accessList)],
+                'Priority' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->Priority;}, $accessList)],
+                'Discard' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->Discard;}, $accessList)],
+                'SrcIpAddress' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->SrcIpAddress;}, $accessList)],
+                'SrcSubnetMask' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->SrcSubnetMask;}, $accessList)],
+                'DestIpAddress' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->DestIpAddress;}, $accessList)],
+                'DestSubnetMask' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->DestSubnetMask;}, $accessList)],
+                'Protocol' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->Protocol;}, $accessList)],
+                'SrcPortStart' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->SrcPortStart;}, $accessList)],
+                'SrcPortEnd' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->SrcPortEnd;}, $accessList)],
+                'DestPortStart' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->DestPortStart;}, $accessList)],
+                'DestPortEnd' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->DestPortEnd;}, $accessList)],
                 'SrcUsername' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->SrcUsername;}, $accessList)],
                 'DestUsername' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->DestUsername;}, $accessList)],
-                'CheckSrcMac' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->CheckSrcMac;}, $accessList)],
-                'SrcMacAddress' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->SrcMacAddress;}, $accessList)],
-                'SrcMacMask' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->SrcMacMask;}, $accessList)],
-                'CheckDstMac' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->CheckDstMac;}, $accessList)],
-                'DstMacAddress' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->DstMacAddress;}, $accessList)],
-                'DstMacMask' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->DstMacMask;}, $accessList)],
-                'CheckTcpState' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->CheckTcpState;}, $accessList)],
-                'Established' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->Established;}, $accessList)],
-                'Delay' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->Delay;}, $accessList)],
-                'Jitter' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->Jitter;}, $accessList)],
-                'Loss' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->Loss;}, $accessList)],
-                'IsIPv6' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->IsIPv6;}, $accessList)],
-                'UniqueId' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->UniqueId;}, $accessList)],
+                'CheckSrcMac' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->CheckSrcMac;}, $accessList)],
+                'SrcMacAddress' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->SrcMacAddress;}, $accessList)],
+                'SrcMacMask' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->SrcMacMask;}, $accessList)],
+                'CheckDstMac' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->CheckDstMac;}, $accessList)],
+                'DstMacAddress' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->DstMacAddress;}, $accessList)],
+                'DstMacMask' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->DstMacMask;}, $accessList)],
+                'CheckTcpState' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->CheckTcpState;}, $accessList)],
+                'Established' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->Established;}, $accessList)],
+                'Delay' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->Delay;}, $accessList)],
+                'Jitter' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->Jitter;}, $accessList)],
+                'Loss' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->Loss;}, $accessList)],
+                'IsIPv6' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->IsIPv6;}, $accessList)],
+                'UniqueId' => ['type' => Containers\SoftEtherValueType::Int, 'value' => array_map(function ($x) { return $x->UniqueId;}, $accessList)],
                 'RedirectUrl' => ['type' => Containers\SoftEtherValueType::String, 'value' => array_map(function ($x) { return $x->RedirectUrl;}, $accessList)],
             ];
 
@@ -340,12 +340,12 @@ namespace SoftEtherApi\Api {
 
             $requestData = [
                 'HubName' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$name]],
-                'HashedPassword' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$hashPair->Hash]],
-                'SecurePassword' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$hashPair->SaltedHash]],
-                'Online' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$online]],
-                'MaxSession' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$maxSession]],
-                'NoEnum' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$noAnonymousEnumUser]],
-                'HubType' => ['type' => Containers\SoftEtherValueType::String, 'value' => [(int)$hubType]],
+                'HashedPassword' => ['type' => Containers\SoftEtherValueType::Raw, 'value' => [$hashPair->Hash]],
+                'SecurePassword' => ['type' => Containers\SoftEtherValueType::Raw, 'value' => [$hashPair->SaltedHash]],
+                'Online' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$online]],
+                'MaxSession' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$maxSession]],
+                'NoEnum' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$noAnonymousEnumUser]],
+                'HubType' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [(int)$hubType]],
             ];
 
             $rawData = $this->softEther->CallMethod('CreateHub', $requestData);
@@ -400,8 +400,8 @@ namespace SoftEtherApi\Api {
                     'HubName' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$hubName]],
                     'Name' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$name]],
                     'GroupName' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$groupName]],
-                    'Realname' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$realName]],
-                    'Note' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$note]],
+                    'Realname' => ['type' => Containers\SoftEtherValueType::UnicodeString, 'value' => [$realName]],
+                    'Note' => ['type' => Containers\SoftEtherValueType::UnicodeString, 'value' => [$note]],
                     'ExpireTime' => ['type' => Containers\SoftEtherValueType::Int64, 'value' => [Infrastructure\SoftEtherConverter::DateTimeToSoftEtherLong($expireTime)]],
                     'AuthType' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [Model\AuthType::Password]],
                     'HashedKey' => ['type' => Containers\SoftEtherValueType::Raw, 'value' => [$hashPair->Hash]],
@@ -434,15 +434,15 @@ namespace SoftEtherApi\Api {
                 'HubName' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$hubName]],
                 'Name' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$name]],
                 'GroupName' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$groupName]],
-                'Realname' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$realName]],
-                'Note' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$note]],
-                'CreatedTime' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$createTime]],
-                'UpdatedTime' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$updatedTime]],
-                'ExpireTime' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$expireTime]],
-                'NumLogin' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$numLogin]],
-                'AuthType' => ['type' => Containers\SoftEtherValueType::String, 'value' => [(int)$authType]],
-                'HashedKey' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$hashedPw]],
-                'NtLmSecureHash' => ['type' => Containers\SoftEtherValueType::String, 'value' => [$securePw]],
+                'Realname' => ['type' => Containers\SoftEtherValueType::UnicodeString, 'value' => [$realName]],
+                'Note' => ['type' => Containers\SoftEtherValueType::UnicodeString, 'value' => [$note]],
+                'CreatedTime' => ['type' => Containers\SoftEtherValueType::Int64, 'value' => [$createTime]],
+                'UpdatedTime' => ['type' => Containers\SoftEtherValueType::Int64, 'value' => [$updatedTime]],
+                'ExpireTime' => ['type' => Containers\SoftEtherValueType::Int64, 'value' => [$expireTime]],
+                'NumLogin' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [$numLogin]],
+                'AuthType' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [(int)$authType]],
+                'HashedKey' => ['type' => Containers\SoftEtherValueType::Raw, 'value' => [$hashedPw]],
+                'NtLmSecureHash' => ['type' => Containers\SoftEtherValueType::Raw, 'value' => [$securePw]],
             ];
 
             $rawData = $this->softEther->CallMethod('SetUser', $requestData);
@@ -463,13 +463,19 @@ namespace SoftEtherApi\Api {
         public function SetUserExpireDate($hubName, $name, $expireDate)
         {
             $user = $this->GetUser($hubName, $name);
-            $user->ExpireTime = $expireDate;
+            if($user->NotValid())
+                return $user;
+
+            $user->ExpireTime = Infrastructure\SoftEtherConverter::DateTimeToSoftEtherLong($expireDate);
             return $this->SetUser($hubName, $user);
         }
 
         public function SetUserPassword($hubName, $name, $password)
         {
             $user = $this->GetUser($hubName, $name);
+            if($user->NotValid())
+                return $user;
+
             $hashPair = $this->softEther->CreateUserHashAndNtLm($name, $password);
 
             $user->HashedKey = $hashPair->Hash;

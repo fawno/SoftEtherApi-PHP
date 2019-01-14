@@ -4,7 +4,7 @@ namespace SoftEtherApi\Infrastructure
 {
     class SoftEtherConverter
     {
-        public static function DateTimeToSoftEtherLong(\DateTime $date)
+        public static function DateTimeToSoftEtherLong(\DateTime $date = null)
         {
             if($date == null)
                 return null;
@@ -15,7 +15,7 @@ namespace SoftEtherApi\Infrastructure
             return $softEtherDate->getTimestamp() * 1000;
         }
 
-        public static function SoftEtherLongToDateTime($date)
+        public static function SoftEtherLongToDateTime($date = null)
         {
             if($date == null)
                 return null;

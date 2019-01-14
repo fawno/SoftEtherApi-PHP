@@ -68,7 +68,7 @@ namespace SoftEtherApi
             $connectResult = SoftEtherModel\ConnectResult::Deserialize($connectDict);
 
             if ($connectResult->Valid())
-                $this->RandomFromServer = $connectResult->random[0];
+                $this->RandomFromServer = $connectResult->random;
 
             return $connectResult;
         }
