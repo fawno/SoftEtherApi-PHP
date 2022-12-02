@@ -3,13 +3,15 @@
 
 namespace SoftEtherApi\Containers
 {
+    use ArrayObject;
+    use ArrayIterator;
     use SoftEtherApi\Containers;
 
-    class SoftEtherList extends \ArrayObject
+    class SoftEtherList extends ArrayObject
     {
         public $Error;
 
-        public function __construct($input = array(), $flags = 0, $iterator_class = "ArrayIterator")
+        public function __construct($input = [], int $flags = 0, string $iterator_class = ArrayIterator::class)
         {
             parent::__construct($input, $flags, $iterator_class);
             $this->Error = Containers\SoftEtherError::NoError;
