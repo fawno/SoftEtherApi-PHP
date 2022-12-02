@@ -1,3 +1,12 @@
+[![GitHub license](https://img.shields.io/github/license/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/blob/master/LICENSE)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/tags)
+[![GitHub release](https://img.shields.io/github/release/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/releases)
+[![Packagist](https://img.shields.io/packagist/v/hoppler/softether-api)](https://packagist.org/packages/hoppler/softether-api)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/hoppler/softether-api)](https://packagist.org/packages/hoppler/softether-api/stats)
+[![GitHub issues](https://img.shields.io/github/issues/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/issues)
+[![GitHub forks](https://img.shields.io/github/forks/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/network)
+[![GitHub stars](https://img.shields.io/github/stars/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/stargazers)
+
 # SoftEtherApi-PHP
 SoftEther VPN Api for PHP
 
@@ -5,6 +14,15 @@ There are still some issues as i only use the c# project activly but not this po
 
 For examples please see:
 https://github.com/hoppler/SoftEtherApi
+
+## Installation using Composer
+
+You can install this plugin into your application using
+[composer](https://getcomposer.org):
+
+```
+  composer require hoppler/softether-api
+```
 
 # How to translate the examples
 The C# code
