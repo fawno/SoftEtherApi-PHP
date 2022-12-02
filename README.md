@@ -1,11 +1,11 @@
-[![GitHub license](https://img.shields.io/github/license/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/blob/master/LICENSE)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/tags)
-[![GitHub release](https://img.shields.io/github/release/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/releases)
+[![GitHub license](https://img.shields.io/github/license/hoppler/SoftEtherApi-PHP)](https://github.com/hoppler/SoftEtherApi-PHP/blob/master/LICENSE)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/hoppler/SoftEtherApi-PHP)](https://github.com/hoppler/SoftEtherApi-PHP/tags)
+[![GitHub release](https://img.shields.io/github/release/hoppler/SoftEtherApi-PHP)](https://github.com/hoppler/SoftEtherApi-PHP/releases)
 [![Packagist](https://img.shields.io/packagist/v/hoppler/softether-api)](https://packagist.org/packages/hoppler/softether-api)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/hoppler/softether-api)](https://packagist.org/packages/hoppler/softether-api/stats)
-[![GitHub issues](https://img.shields.io/github/issues/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/issues)
-[![GitHub forks](https://img.shields.io/github/forks/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/network)
-[![GitHub stars](https://img.shields.io/github/stars/hoppler/SoftEtherApi)](https://github.com/hoppler/SoftEtherApi/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/hoppler/SoftEtherApi-PHP)](https://github.com/hoppler/SoftEtherApi-PHP/issues)
+[![GitHub forks](https://img.shields.io/github/forks/hoppler/SoftEtherApi-PHP)](https://github.com/hoppler/SoftEtherApi-PHP/network)
+[![GitHub stars](https://img.shields.io/github/stars/hoppler/SoftEtherApi-PHP)](https://github.com/hoppler/SoftEtherApi-PHP/stargazers)
 
 # SoftEtherApi-PHP
 SoftEther VPN Api for PHP
