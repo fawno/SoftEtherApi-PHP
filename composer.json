@@ -1,6 +1,6 @@
 {
 	"name": "hoppler/softether-api",
-	"homepage": "http://www.fpdf.org",
+	"homepage": "https://github.com/hoppler/SoftEtherApi-PHP",
 	"description": "SoftEther VPN Api for PHP",
 	"type": "library",
 	"keywords": ["SoftEhter", "api"],
