@@ -2,6 +2,8 @@
 
 namespace SoftEtherApi\SoftEtherModel
 {
+    use DateTimeZone;
+    use SoftEtherApi\Infrastructure\SoftEtherConverter;
     use SoftEtherApi\Model;
 
     class HubUser extends Model\BaseSoftEtherModel
@@ -27,5 +29,20 @@ namespace SoftEtherApi\SoftEtherModel
         public $SendUnicastBytes;
         public $SendUnicastCount;
         public $UpdatedTime;
+
+        public function getCreated(string $format = 'Y-m-d H:i:s', ?DateTimeZone $dateTimeZone = null): ?string
+        {
+            return $this->CreatedTime ? SoftEtherConverter::SoftEtherLongToDateTime($this->CreatedTime, $dateTimeZone)->format($format) : null;
+        }
+
+        public function getExpire(string $format = 'Y-m-d H:i:s', ?DateTimeZone $dateTimeZone = null): ?string
+        {
+            return $this->ExpireTime ? SoftEtherConverter::SoftEtherLongToDateTime($this->ExpireTime, $dateTimeZone)->format($format) : null;
+        }
+
+        public function getUpdated(string $format = 'Y-m-d H:i:s', ?DateTimeZone $dateTimeZone = null): ?string
+        {
+            return $this->UpdatedTime ? SoftEtherConverter::SoftEtherLongToDateTime($this->UpdatedTime, $dateTimeZone)->format($format) : null;
+        }
     }
 }
