@@ -14,6 +14,7 @@ namespace SoftEtherApi\SoftEtherModel
         public $HubName;
         public $Name;
         public $Note;
+        public $NtUsername;
         public $NtLmSecureHash;
         public $NumLogin;
         public $Realname;
