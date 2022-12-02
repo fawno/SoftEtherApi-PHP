@@ -1,0 +1,22 @@
+{
+	"name": "hoppler/softether-api",
+	"homepage": "http://www.fpdf.org",
+	"description": "SoftEther VPN Api for PHP",
+	"type": "library",
+	"keywords": ["SoftEhter", "api"],
+	"license": "MIT",
+	"authors": [
+			{
+					"name": "hoppler",
+					"homepage": "https://github.com/hoppler"
+			}
+	],
+	"require": {
+			"php": ">=7.2"
+	},
+	"autoload": {
+			"psr-4": {
+					"SoftEtherApi\\": "SoftEtherApi/"
+			}
+	}
+}
