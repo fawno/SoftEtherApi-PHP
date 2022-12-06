@@ -1,22 +1,26 @@
 {
-	"name": "hoppler/softether-api",
-	"homepage": "https://github.com/hoppler/SoftEtherApi-PHP",
+	"name": "fawno/softether-api",
+	"homepage": "https://github.com/fawno/SoftEtherApi-PHP",
 	"description": "SoftEther VPN Api for PHP",
 	"type": "library",
 	"keywords": ["SoftEhter", "api"],
 	"license": "MIT",
 	"authors": [
-			{
-					"name": "hoppler",
-					"homepage": "https://github.com/hoppler"
-			}
+        {
+            "name": "hoppler",
+            "homepage": "https://github.com/hoppler"
+        },
+        {
+            "name": "Fernando Herrero",
+            "homepage": "https://lab.fawno.com"
+        }
 	],
 	"require": {
-			"php": ">=7.2"
+        "php": ">=7.2"
 	},
 	"autoload": {
-			"psr-4": {
-					"SoftEtherApi\\": "SoftEtherApi/"
-			}
+        "psr-4": {
+            "SoftEtherApi\\": "SoftEtherApi/"
+        }
 	}
 }
