@@ -2,6 +2,8 @@
 
 namespace SoftEtherApi\SoftEtherModel
 {
+    use DateTimeZone;
+    use SoftEtherApi\Infrastructure\SoftEtherConverter;
     use SoftEtherApi\Model;
 
     class HubUserList extends Model\BaseSoftEtherModel
@@ -26,5 +28,15 @@ namespace SoftEtherApi\SoftEtherModel
         public $Note;
         public $NumLogin;
         public $Realname;
+
+        public function getExpires(string $format = 'Y-m-d H:i:s', ?DateTimeZone $dateTimeZone = null): ?string
+        {
+            return $this->Expires ? SoftEtherConverter::SoftEtherLongToDateTime($this->Expires, $dateTimeZone)->format($format) : null;
+        }
+
+        public function getLastLogin(string $format = 'Y-m-d H:i:s', ?DateTimeZone $dateTimeZone = null): ?string
+        {
+            return $this->LastLoginTime ? SoftEtherConverter::SoftEtherLongToDateTime($this->LastLoginTime, $dateTimeZone)->format($format) : null;
+        }
     }
 }
