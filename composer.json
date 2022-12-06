@@ -20,7 +20,7 @@
 	},
 	"autoload": {
         "psr-4": {
-            "SoftEtherApi\\": "SoftEtherApi/"
+            "SoftEtherApi\\": "src/"
         }
 	}
 }
