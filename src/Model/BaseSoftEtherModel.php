@@ -1,40 +1,34 @@
 <?php
+	declare(strict_types=1);
 
-namespace SoftEtherApi\Model
-{
-    use SoftEtherApi\Infrastructure;
-    use SoftEtherApi\Containers;
+	namespace SoftEtherApi\Model;
 
-    abstract class BaseSoftEtherModel
-    {
-        public $Error;
+	use SoftEtherApi\Containers\SoftEtherError;
+	use SoftEtherApi\Containers\SoftEtherList;
+	use SoftEtherApi\Infrastructure\ModelDeserializer;
 
-        public function __construct($error = Containers\SoftEtherError::NoError)
-        {
-            $this->Error = $error;
-        }
+	abstract class BaseSoftEtherModel {
+		public $Error;
 
-        public function Valid()
-        {
-            return $this->Error == Containers\SoftEtherError::NoError;
-        }
-        
-        public function NotValid()
-        {
-            return !$this->Valid();
-        }
+		public function __construct (string $error = SoftEtherError::NoError) {
+			$this->Error = $error;
+		}
 
-        public static function Deserialize($collection)
-        {
-            $result = Infrastructure\ModelDeserializer::Deserialize(static::class, $collection);
-            if($result->NotValid())
-                return $result;
-            return $result[0];
-        }
+		public function Valid () : bool {
+			return $this->Error == SoftEtherError::NoError;
+		}
 
-        public static function DeserializeMany($collection)
-        {
-            return Infrastructure\ModelDeserializer::Deserialize(static::class, $collection);
-        }
-    }
-}
+		public function NotValid () : bool {
+			return !$this->Valid();
+		}
+
+		public static function Deserialize (array $collection) {
+			$result = ModelDeserializer::Deserialize(static::class, $collection);
+
+			return $result->NotValid() ? $result : $result[0];
+		}
+
+		public static function DeserializeMany (array $collection) : SoftEtherList {
+			return ModelDeserializer::Deserialize(static::class, $collection);
+		}
+	}

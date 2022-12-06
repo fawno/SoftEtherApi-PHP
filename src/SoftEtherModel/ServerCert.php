@@ -1,12 +1,11 @@
 <?php
+	declare(strict_types=1);
 
-namespace SoftEtherApi\SoftEtherModel
-{
-    use SoftEtherApi\Model;
+	namespace SoftEtherApi\SoftEtherModel;
 
-    class ServerCert extends Model\BaseSoftEtherModel
-    {
-        public $Cert;
-        public $Flag1;
-    }
-}
+	use SoftEtherApi\Model\BaseSoftEtherModel;
+
+	class ServerCert extends BaseSoftEtherModel {
+		public $Cert;
+		public $Flag1;
+	}

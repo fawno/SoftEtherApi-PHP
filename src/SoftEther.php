@@ -1,198 +1,179 @@
 <?php
+	declare(strict_types=1);
 
+	namespace SoftEtherApi;
 
-namespace SoftEtherApi
-{
-    spl_autoload_register(function ($class) {
-        $file = str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
-        if (file_exists($file)) {
-            require_once $file;
-            return true;
-        }
-        return false;
-    });
+	use Exception;
+	use SoftEtherApi\Api\SoftEtherHub;
+	use SoftEtherApi\Api\SoftEtherServer;
+	use SoftEtherApi\Containers\SoftEtherError;
+	use SoftEtherApi\Containers\SoftEtherHashPair;
+	use SoftEtherApi\Containers\SoftEtherNetwork;
+	use SoftEtherApi\Containers\SoftEtherProtocol;
+	use SoftEtherApi\Containers\SoftEtherValueType;
+	use SoftEtherApi\Infrastructure\SHA0;
+	use SoftEtherApi\SoftEtherModel\AuthResult;
+	use SoftEtherApi\SoftEtherModel\ConnectResult;
 
-    use Exception;
-    use SoftEtherApi\Api;
-    use SoftEtherApi\Containers;
-    use SoftEtherApi\Infrastructure;
-    use SoftEtherApi\SoftEtherModel;
+	class SoftEther {
+		private $socket;
 
-    class SoftEther
-    {
-        private $socket;
+		public $RandomFromServer;
 
-        public $RandomFromServer;
+		public $ServerApi;
+		public $HubApi;
 
-        public $ServerApi;
-        public $HubApi;
+		public function __construct (string $host, int $port, $stream_context = null) {
+			$stream_context = $stream_context ?? stream_context_create([
+				'ssl' => [
+					'verify_peer' => false,
+					'verify_peer_name' => false,
+					'allow_self_signed' => true,
+				]
+			]);
 
-        public function __construct($host, $port)
-        {
-            $contextOptions = stream_context_create([
-                'ssl' => [
-                    'verify_peer' => false, // You could skip all of the trouble by changing this to false, but it's WAY uncool for security reasons.
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true,
-                    //'cafile' => '/etc/ssl/certs/cacert.pem',
-                    //'CN_match' => 'example.com', // Change this to your certificates Common Name (or just comment this line out if not needed)
-                ]
-            ]);
+			$this->socket = @stream_socket_client("ssl://${host}:${port}", $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $stream_context);
+			$this->RandomFromServer = null;
 
-            $this->socket = stream_socket_client("ssl://${host}:${port}", $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $contextOptions);
-            $this->RandomFromServer = null;
+			if (!$this->socket) {
+				throw new SoftEtherException($errstr, $errno);
+			}
 
-            if (!$this->socket)
-            {
-                echo "$errstr ($errno)";
-            }
-            $this->ServerApi = new Api\SoftEtherServer($this);
-            $this->HubApi = new Api\SoftEtherHub($this);
-        }
+			$this->ServerApi = new SoftEtherServer($this);
+			$this->HubApi = new SoftEtherHub($this);
+		}
 
-        public function close()
-        {
-            fclose($this->socket);
-        }
+		public function close () : void {
+			fclose($this->socket);
+		}
 
-        public function Connect()
-        {
-            Containers\SoftEtherNetwork::SendHttpRequest($this->socket, 'POST', '/vpnsvc/connect.cgi', 'VPNCONNECT',
-                Containers\SoftEtherNetwork::GetDefaultHeaders());
+		public function Connect () {
+			SoftEtherNetwork::SendHttpRequest($this->socket, 'POST', '/vpnsvc/connect.cgi', 'VPNCONNECT', SoftEtherNetwork::GetDefaultHeaders());
 
-            $connectResponse = Containers\SoftEtherNetwork::GetHttpResponse($this->socket);
-            if ($connectResponse->code != 200)
-                return new SoftEtherModel\ConnectResult(Containers\SoftEtherError::ConnectFailed);
+			$connectResponse = SoftEtherNetwork::GetHttpResponse($this->socket);
+			if ($connectResponse->code != 200) {
+				return new ConnectResult(SoftEtherError::ConnectFailed);
+			}
 
-            $connectDict = Containers\SoftEtherProtocol::Deserialize($connectResponse->body);
-            $connectResult = SoftEtherModel\ConnectResult::Deserialize($connectDict);
+			$connectDict = SoftEtherProtocol::Deserialize($connectResponse->body);
+			$connectResult = ConnectResult::Deserialize($connectDict);
 
-            if ($connectResult->Valid())
-                $this->RandomFromServer = $connectResult->random;
+			if ($connectResult->Valid()) {
+				$this->RandomFromServer = $connectResult->random;
+			}
 
-            return $connectResult;
-        }
+			return $connectResult;
+		}
 
-        public function Authenticate($password, $hubName = null)
-        {
-            $passwordHash = self::CreatePasswordHash($password);
-            return $this->AuthenticateHash($passwordHash, $hubName);
-        }
+		public function Authenticate (string $password, ?string $hubName = null) {
+				$passwordHash = self::CreatePasswordHash($password);
+				return $this->AuthenticateHash($passwordHash, $hubName);
+		}
 
-        public function AuthenticateHash($passwordHash, $hubName = null)
-        {
-            if ($this->RandomFromServer == null)
-                return new SoftEtherModel\AuthResult(Containers\SoftEtherError::ConnectFailed);
+		public function AuthenticateHash (array $passwordHash, ?string $hubName = null) {
+			if ($this->RandomFromServer == null) {
+				return new AuthResult(SoftEtherError::ConnectFailed);
+			}
 
-            $authPayload =
-                [
-                    'method' => ['type' => Containers\SoftEtherValueType::String, 'value' => ['admin']],
-                    'client_str' => ['type' => Containers\SoftEtherValueType::String, 'value' => ['SoftEtherNet']],
-                    'client_ver' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [1]],
-                    'client_build' => ['type' => Containers\SoftEtherValueType::Int, 'value' => [0]]
-                ];
+			$authPayload = [
+				'method' => ['type' => SoftEtherValueType::String, 'value' => ['admin']],
+				'client_str' => ['type' => SoftEtherValueType::String, 'value' => ['SoftEtherNet']],
+				'client_ver' => ['type' => SoftEtherValueType::Int, 'value' => [1]],
+				'client_build' => ['type' => SoftEtherValueType::Int, 'value' => [0]],
+			];
 
-            if ($hubName !== null && $hubName !== '')
-                $authPayload['hubname'] = ['type' => Containers\SoftEtherValueType::String, 'value' => [$hubName]];
+			if ($hubName !== null && $hubName !== '') {
+				$authPayload['hubname'] = ['type' => SoftEtherValueType::String, 'value' => [$hubName]];
+			}
 
-            $securePassword = self::CreateSaltedHash($passwordHash, $this->RandomFromServer);
-            $authPayload['secure_password'] = ['type' => Containers\SoftEtherValueType::Raw, 'value' => [$securePassword]];
+			$securePassword = self::CreateSaltedHash($passwordHash, $this->RandomFromServer);
+			$authPayload['secure_password'] = ['type' => SoftEtherValueType::Raw, 'value' => [$securePassword]];
 
-            $serializedAuthPayload = Containers\SoftEtherProtocol::Serialize($authPayload);
-            Containers\SoftEtherNetwork::SendHttpRequest($this->socket, 'POST', '/vpnsvc/vpn.cgi', $serializedAuthPayload, Containers\SoftEtherNetwork::GetDefaultHeaders());
+			$serializedAuthPayload = SoftEtherProtocol::Serialize($authPayload);
+			SoftEtherNetwork::SendHttpRequest($this->socket, 'POST', '/vpnsvc/vpn.cgi', $serializedAuthPayload, SoftEtherNetwork::GetDefaultHeaders());
 
-            $authResponse = Containers\SoftEtherNetwork::GetHttpResponse($this->socket);
+			$authResponse = SoftEtherNetwork::GetHttpResponse($this->socket);
 
-            if ($authResponse->code != 200)
-                return new SoftEtherModel\AuthResult(Containers\SoftEtherError::AuthFailed);
+			if ($authResponse->code != 200) {
+				return new AuthResult(SoftEtherError::AuthFailed);
+			}
 
-            $authDict = Containers\SoftEtherProtocol::Deserialize($authResponse->body);
-            return SoftEtherModel\AuthResult::Deserialize($authDict);
-        }
+			$authDict = SoftEtherProtocol::Deserialize($authResponse->body);
+			return AuthResult::Deserialize($authDict);
+		}
 
-        public function CallMethod($functionName, $payload = null)
-        {
-            if ($payload == null)
-                $payload = [];
+		public function CallMethod (string $functionName, array $payload = []) {
+			//payload.RemoveNullParameters();
+			$payload['function_name'] = ['type' => SoftEtherValueType::String, 'value' => [$functionName]];
 
-            //payload.RemoveNullParameters();
-            $payload['function_name'] = ['type' => Containers\SoftEtherValueType::String, 'value' => [$functionName]];
+			$serializedPayload = SoftEtherProtocol::Serialize($payload);
+			$serializedLength = SoftEtherProtocol::SerializeInt(strlen($serializedPayload));
 
-            $serializedPayload = Containers\SoftEtherProtocol::Serialize($payload);
-            $serializedLength = Containers\SoftEtherProtocol::SerializeInt(strlen($serializedPayload));
+			fwrite($this->socket, $serializedLength);
+			fwrite($this->socket, $serializedPayload);
 
-            fwrite($this->socket, $serializedLength);
-            fwrite($this->socket, $serializedPayload);
+			$dataLength = fread($this->socket, 4);
 
-            $dataLength = fread($this->socket, 4);
+			if (strlen($dataLength) != 4) {
+				throw new Exception('Failed to read dataLength');
+			}
 
-            if (strlen($dataLength) != 4)
-                throw new Exception('Failed to read dataLength');
+			$dataLengthAsInt = SoftEtherProtocol::DeserializeInt($dataLength);
+			$responseBuffer = '';
 
-            $dataLengthAsInt = Containers\SoftEtherProtocol::DeserializeInt($dataLength);
-            $responseBuffer = '';
+			$tries = 0;
+			do {
+				$responseBuffer .= fread($this->socket, $dataLengthAsInt - strlen($responseBuffer));
+				usleep(50000);
+			} while (strlen($responseBuffer) < $dataLengthAsInt and 10 > $tries++);
 
-            for ($i = 0; $i < 10; $i++) //retrie 10 times to read all data
-            {
-                $responseBuffer .= fread($this->socket, $dataLengthAsInt - strlen($responseBuffer));
-                if (strlen($responseBuffer) == $dataLengthAsInt)
-                    break;
-                usleep(50000);
-            }
+			if (strlen($responseBuffer) != $dataLengthAsInt) {
+				throw new Exception('read less than dataLength');
+			}
 
-            if (strlen($responseBuffer) != $dataLengthAsInt)
-                throw new Exception('read less than dataLength');
+			$response = SoftEtherProtocol::Deserialize($responseBuffer);
 
-            $response = Containers\SoftEtherProtocol::Deserialize($responseBuffer);
+			return $response;
+		}
 
-            return $response;
-        }
+		public static function CreateUserHashAndNtLm (string $name, string $password) : SoftEtherHashPair {
+			$hashedPw = self::CreateUserPasswordHash($name, $password);
+			$ntlmHash = self::CreateNtlmHash($password);
+			return new SoftEtherHashPair($hashedPw, $ntlmHash);
+		}
 
-        public static function CreateUserHashAndNtLm($name, $password)
-        {
-            $hashedPw = self::CreateUserPasswordHash($name, $password);
-            $ntlmHash = self::CreateNtlmHash($password);
-            return new Containers\SoftEtherHashPair($hashedPw, $ntlmHash);
-        }
+		public static function CreateUserPasswordHash (string $username, string $password) : array {
+			$hashCreator = new SHA0();
+			$hashCreator->Update(unpack('C*', $password));
+			$hashedPw = $hashCreator->Update(unpack('C*', strtoupper($username)))->Digest();
+			return $hashedPw;
+		}
 
-        public static function CreateUserPasswordHash($username, $password)
-        {
-            $hashCreator = new Infrastructure\SHA0();
-            $hashCreator->Update(unpack('C*', $password));
-            $hashedPw = $hashCreator->Update(unpack('C*', strtoupper($username)))->Digest();
-            return $hashedPw;
-        }
+		public static function CreateNtlmHash (string $password) {
+			$hashPrepare = iconv('UTF-8', 'UTF-16LE', $password);
+			$ntlmHash = hash('md4', $hashPrepare, true);
+			return unpack('C*', $ntlmHash);
+		}
 
-        public static function CreateNtlmHash($password)
-        {
-            $hashPrepare =iconv('UTF-8','UTF-16LE',$password);
-            $ntlmHash = hash('md4', $hashPrepare, true);
-            return unpack('C*', $ntlmHash);
-        }
+		public function CreateHashAnSecure (string $password) : SoftEtherHashPair {
+			$hashedPw = self::CreatePasswordHash($password);
+			$saltedPw = self::CreateSaltedHash($hashedPw, $this->RandomFromServer);
 
-        public function CreateHashAnSecure($password)
-        {
-            $hashedPw = self::CreatePasswordHash($password);
-            $saltedPw = self::CreateSaltedHash($hashedPw, $this->RandomFromServer);
+			return new SoftEtherHashPair($hashedPw, $saltedPw);
+		}
 
-            return new Containers\SoftEtherHashPair($hashedPw, $saltedPw);
-        }
+		public static function CreatePasswordHash (string $password) : array {
+			$hashCreator = new SHA0();
+			$hashedPw = $hashCreator->Update(unpack('C*', $password))->Digest();
 
-        public static function CreatePasswordHash($password)
-        {
-            $hashCreator = new Infrastructure\SHA0();
-            $hashedPw = $hashCreator->Update(unpack('C*', $password))->Digest();
+			return $hashedPw;
+		}
 
-            return $hashedPw;
-        }
+		public static function CreateSaltedHash (array $passwordHash, $salt) : array {
+			$hashCreator = new SHA0();
+			$hashCreator->Update($passwordHash);
+			$saltedPw = $hashCreator->Update($salt)->Digest();
 
-        public static function CreateSaltedHash($passwordHash, $salt)
-        {
-            $hashCreator = new Infrastructure\SHA0();
-            $hashCreator->Update($passwordHash);
-            $saltedPw = $hashCreator->Update($salt)->Digest();
-
-            return $saltedPw;
-        }
-    }
-}
+			return $saltedPw;
+		}
+	}

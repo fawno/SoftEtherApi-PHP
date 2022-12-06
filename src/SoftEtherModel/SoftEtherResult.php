@@ -1,11 +1,9 @@
 <?php
+	declare(strict_types=1);
 
-namespace SoftEtherApi\SoftEtherModel
-{
-    use SoftEtherApi\Model;
+	namespace SoftEtherApi\SoftEtherModel;
 
-    class SoftEtherResult extends Model\BaseSoftEtherModel
-    {
-        
-    }
-}
+	use SoftEtherApi\Model\BaseSoftEtherModel;
+
+	class SoftEtherResult extends BaseSoftEtherModel {
+	}

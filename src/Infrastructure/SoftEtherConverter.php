@@ -1,36 +1,37 @@
 <?php
+	declare(strict_types=1);
 
-namespace SoftEtherApi\Infrastructure
-{
-    use DateInterval;
-    use DateTime;
-    use DateTimeZone;
+	namespace SoftEtherApi\Infrastructure;
 
-    class SoftEtherConverter
-    {
-        public static function DateTimeToSoftEtherLong(DateTime $date = null): ?int
-        {
-            if($date == null)
-                return null;
+	use DateInterval;
+	use DateTime;
+	use DateTimeZone;
 
-            $softEtherDate = $date;
-            $softEtherDate->sub(new DateInterval("PT9H")); //sub 9 Hours from UTC for JAPAN Timezone which SoftEther expects
-            return $softEtherDate->getTimestamp() * 1000;
-        }
+	class SoftEtherConverter {
+		public static function DateTimeToSoftEtherLong(DateTime $date = null): ?int {
+			if ($date == null) {
+				return null;
+			}
 
-        public static function SoftEtherLongToDateTime(?int $date = null, ?DateTimeZone $dateTimeZone = null): ?DateTime
-        {
-            if($date == null)
-                return null;
+			$softEtherDate = $date;
+			//sub 9 Hours from UTC for JAPAN Timezone which SoftEther expects
+			$softEtherDate->sub(new DateInterval("PT9H"));
+			return $softEtherDate->getTimestamp() * 1000;
+		}
 
-            $result = new DateTime();
-            $result->setTimestamp($date / 1000);
-            $result->add(new DateInterval("PT9H"));//add 9 Hours for JAPAN Timezone which SoftEther delivers to UTC
+		public static function SoftEtherLongToDateTime(?int $date = null, ?DateTimeZone $dateTimeZone = null): ?DateTime {
+			if ($date == null) {
+				return null;
+			}
 
-            if($dateTimeZone)
-                $result->setTimezone($dateTimeZone);
+			$result = new DateTime();
+			$result->setTimestamp($date / 1000);
+			$result->add(new DateInterval("PT9H"));//add 9 Hours for JAPAN Timezone which SoftEther delivers to UTC
 
-            return $result;
-        }
-    }
-}
+			if ($dateTimeZone) {
+				$result->setTimezone($dateTimeZone);
+			}
+
+			return $result;
+		}
+	}
