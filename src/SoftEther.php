@@ -66,8 +66,8 @@
 		}
 
 		public function Authenticate (string $password, ?string $hubName = null) {
-				$passwordHash = self::CreatePasswordHash($password);
-				return $this->AuthenticateHash($passwordHash, $hubName);
+			$passwordHash = self::CreatePasswordHash($password);
+			return $this->AuthenticateHash($passwordHash, $hubName);
 		}
 
 		public function AuthenticateHash (array $passwordHash, ?string $hubName = null) {
