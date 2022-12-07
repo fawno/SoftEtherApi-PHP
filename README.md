@@ -13,7 +13,7 @@ SoftEther VPN Api for PHP
 There are still some issues as i only use the c# project activly but not this port. Just open a ticket.
 
 For examples please see:
-https://github.com/fawno/SoftEtherApi
+https://github.com/hoppler/SoftEtherApi
 
 ## Installation using Composer
 
