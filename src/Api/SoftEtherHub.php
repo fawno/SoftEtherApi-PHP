@@ -15,6 +15,7 @@
 	use SoftEtherApi\SoftEtherModel\Hub;
 	use SoftEtherApi\SoftEtherModel\HubAccessList;
 	use SoftEtherApi\SoftEtherModel\HubGroup;
+	use SoftEtherApi\SoftEtherModel\HubGroupList;
 	use SoftEtherApi\SoftEtherModel\HubList;
 	use SoftEtherApi\SoftEtherModel\HubLog;
 	use SoftEtherApi\SoftEtherModel\HubRadius;
@@ -295,6 +296,15 @@
 
 			$rawData = $this->softEther->CallMethod('GetUser', $requestData);
 			return HubUser::Deserialize($rawData);
+		}
+
+		public function GetGroupList (string $hubName) {
+			$requestData = [
+				'HubName' => ['type' => SoftEtherValueType::String, 'value' => [$hubName]],
+			];
+
+			$rawData = $this->softEther->CallMethod('EnumGroup', $requestData);
+			return HubGroupList::DeserializeMany($rawData);
 		}
 
 		public function GetGroup (string $hubName, string $name) {
