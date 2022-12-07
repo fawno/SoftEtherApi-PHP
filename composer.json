@@ -7,11 +7,11 @@
 	"license": "MIT",
 	"authors": [
         {
-            "name": "hoppler"
-        },
-        {
             "name": "Fernando Herrero",
             "homepage": "https://lab.fawno.com"
+        },
+        {
+            "name": "hoppler"
         }
 	],
 	"require": {
