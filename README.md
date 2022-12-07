@@ -1,6 +1,5 @@
 [![GitHub license](https://img.shields.io/github/license/fawno/SoftEtherApi-PHP)](https://github.com/fawno/SoftEtherApi-PHP/blob/master/LICENSE)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/fawno/SoftEtherApi-PHP)](https://github.com/fawno/SoftEtherApi-PHP/tags)
-[![GitHub release](https://img.shields.io/github/release/fawno/SoftEtherApi-PHP)](https://github.com/fawno/SoftEtherApi-PHP/releases)
 [![Packagist](https://img.shields.io/packagist/v/fawno/softether-api)](https://packagist.org/packages/fawno/softether-api)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/fawno/softether-api)](https://packagist.org/packages/fawno/softether-api/stats)
 [![GitHub issues](https://img.shields.io/github/issues/fawno/SoftEtherApi-PHP)](https://github.com/fawno/SoftEtherApi-PHP/issues)
