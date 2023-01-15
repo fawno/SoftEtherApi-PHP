@@ -387,7 +387,7 @@
 			return $this->SetGroup($hubName, $group);
 		}
 
-		public function CreateUser (string $hubName, string $name, string $password, ?string $groupName = null, ?string $realName = null, ?string $note = null, ?int $expireTime = null) {
+		public function CreateUser (string $hubName, string $name, string $password, ?string $groupName = null, ?string $realName = null, ?string $note = null, ?DateTime $expireTime = null) {
 			$hashPair = $this->softEther->CreateUserHashAndNtLm($name, $password);
 
 			$requestData = [
