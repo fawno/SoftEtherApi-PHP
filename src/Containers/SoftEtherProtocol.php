@@ -50,7 +50,7 @@
 				switch ($val['type']) {
 					case SoftEtherValueType::Int:
 						foreach ($val['value'] as $t) {
-							$returnVal .= self::SerializeInt($t);
+							$returnVal .= self::SerializeInt((int) $t);
 						}
 						break;
 					case SoftEtherValueType::Raw:
@@ -61,19 +61,19 @@
 						break;
 					case SoftEtherValueType::String:
 						foreach ($val['value'] as $t) {
-							$returnVal .= self::SerializeInt(strlen($t));
+							$returnVal .= self::SerializeInt(strlen((string) $t));
 							$returnVal .= $t;
 						}
 						break;
 					case SoftEtherValueType::UnicodeString:
 						foreach ($val['value'] as $t) {
-							$returnVal .= self::SerializeInt(strlen($t));
+							$returnVal .= self::SerializeInt(strlen((string) $t));
 							$returnVal .= $t;
 						}
 						break;
 					case SoftEtherValueType::Int64:
 						foreach ($val['value'] as $t) {
-							$returnVal .= self::SerializeLong($t);
+							$returnVal .= self::SerializeLong((int) $t);
 						}
 						break;
 					default:
@@ -166,4 +166,3 @@
 			return $res;
 		}
 	}
-
